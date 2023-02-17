@@ -1,7 +1,6 @@
 ''' 
-Export the "Server Name" column from Wireshark to a file and
-run the following code to detect domains reported as malicious
-by reading this file.
+Export the "Server Name" column from Wireshark to a file. 
+Then run the following code to detect domains reported as malicious.
 '''
 
 import requests
