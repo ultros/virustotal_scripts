@@ -1,0 +1,28 @@
+''' 
+Export the "Server Name" column from Wireshark to a file and
+run the following code to detect domains reported as malicious
+by reading this file.
+'''
+
+import requests
+
+server_name_file = 'c:\\data\\server-names.txt'
+
+with open(server_name_file, 'r') as file:
+    for line in file.readlines():
+        domain = line.strip()
+
+        url = f"https://www.virustotal.com/api/v3/domains/{domain}"
+        headers = {
+            "accept": "application/json",
+            "x-apikey": "your_virus_total_api_key"
+        }
+        response = requests.get(url, headers=headers)
+        res = response.json()
+
+        try:
+            x = res.get("data").get("attributes").get("last_analysis_stats").get("malicious")
+            if x:
+                print(f"{domain}: Malicious: {x}")
+        except:
+            pass
